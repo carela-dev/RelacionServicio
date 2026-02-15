@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Registro de Turno</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#33c738",
+                        "background-light": "#f6f8f6",
+                        "background-dark": "#131f13",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #dde4dd; border-radius: 10px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #33c738; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-[#121712] font-display">
+<div class="flex flex-col min-h-screen">
+<!-- Navigation Header -->
+<header class="sticky top-0 z-50 bg-white border-b border-[#dde4dd] px-6 py-3 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="bg-primary p-1.5 rounded-lg text-white">
+<span class="material-symbols-outlined text-2xl">assignment_turned_in</span>
+</div>
+<div>
+<h1 class="text-xl font-bold text-[#121712] leading-tight">Registro de Turno</h1>
+<p class="text-xs text-[#678368] font-medium uppercase tracking-wider">Operaciones Diarias</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center gap-2 px-3 py-1.5 bg-[#f1f4f1] rounded-full text-sm font-medium text-[#121712]">
+<span class="material-symbols-outlined text-lg">account_circle</span>
+<span>Admin User</span>
+</div>
+<div class="flex gap-2">
+<button class="bg-[#f1f4f1] hover:bg-[#e2e8e2] text-[#121712] px-4 py-2 rounded-lg text-sm font-bold transition-colors">
+                        Cancelar
+                    </button>
+<button class="bg-primary hover:bg-primary/90 text-white px-6 py-2 rounded-lg text-sm font-bold shadow-sm shadow-primary/20 transition-colors">
+                        Guardar Registro
+                    </button>
+</div>
+</div>
+</header>
+<main class="flex-1 max-w-[1440px] mx-auto w-full p-6">
+<!-- Metadata Header Section -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8 bg-white p-6 rounded-xl border border-[#dde4dd] shadow-sm">
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#121712]">Turno</label>
+<div class="relative">
+<select class="w-full h-12 pl-4 pr-10 border border-[#dde4dd] rounded-lg appearance-none focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all">
+<option>Turno 1 (Mañana)</option>
+<option>Turno 2 (Tarde)</option>
+<option>Turno 3 (Noche)</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-3 text-[#678368] pointer-events-none">expand_more</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#121712]">Fecha</label>
+<div class="relative">
+<input class="w-full h-12 pl-11 pr-4 border border-[#dde4dd] rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all" type="text" value="13 de febrero del 2026"/>
+<span class="material-symbols-outlined absolute left-3 top-3 text-[#678368]">calendar_today</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-sm font-semibold text-[#121712]">Estado General</label>
+<div class="flex items-center gap-3 h-12 px-4 bg-[#f1f4f1] rounded-lg">
+<span class="w-3 h-3 rounded-full bg-primary animate-pulse"></span>
+<span class="text-sm font-medium">Turno en Proceso</span>
+</div>
+</div>
+</div>
+<!-- Main Data Entry Table -->
+<div class="bg-white rounded-xl border border-[#dde4dd] shadow-sm overflow-hidden">
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left border-collapse min-w-[1200px]">
+<thead>
+<tr class="bg-[#f8faf8] border-b border-[#dde4dd]">
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-48">Zona</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-56">Sup. Entrante</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-56">Sup. Saliente</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-24 text-center">Horas Ent.</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-24 text-center">H. Extras</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-24 text-center">P. Vacíos</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-64">Detalles / Justificación</th>
+<th class="px-4 py-4 text-xs font-bold text-[#678368] uppercase tracking-wider w-32 text-center">Estado</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-[#dde4dd]">
+<!-- Row 1: Village -->
+<tr class="hover:bg-[#f1f4f1]/30 transition-colors">
+<td class="px-4 py-4">
+<select class="w-full text-sm border-none focus:ring-0 bg-transparent font-medium text-[#121712]">
+<option selected="">Village</option>
+<option>Zona 6</option>
+<option>Águila 16</option>
+<option>Industrial</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5 focus:ring-1 focus:ring-primary focus:border-primary">
+<option>Juan Pérez</option>
+<option>Ana Gómez</option>
+<option>Marcos Díaz</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5 focus:ring-1 focus:ring-primary focus:border-primary">
+<option>Carlos Ruiz</option>
+<option>Elena Sans</option>
+<option>Luis Torres</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="8"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="2"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="0"/>
+</td>
+<td class="px-4 py-4">
+<textarea class="w-full text-sm border border-[#dde4dd] rounded p-2 h-10 resize-none focus:h-24 transition-all" placeholder="Agregar justificación..."></textarea>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center justify-center px-3 py-1 rounded-full text-[11px] font-bold bg-primary/15 text-primary border border-primary/20 uppercase">
+                                        Completo
+                                    </span>
+</td>
+</tr>
+<!-- Row 2: Zona 6 -->
+<tr class="hover:bg-[#f1f4f1]/30 transition-colors">
+<td class="px-4 py-4">
+<select class="w-full text-sm border-none focus:ring-0 bg-transparent font-medium text-[#121712]">
+<option>Village</option>
+<option selected="">Zona 6</option>
+<option>Águila 16</option>
+<option>Industrial</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5">
+<option>Ana Gómez</option>
+<option>Juan Pérez</option>
+<option>Marcos Díaz</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5">
+<option>Luis Torres</option>
+<option>Carlos Ruiz</option>
+<option>Elena Sans</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="8"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="0"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5 border-red-300 bg-red-50 text-red-600 font-bold" type="number" value="2"/>
+</td>
+<td class="px-4 py-4">
+<textarea class="w-full text-sm border border-red-200 bg-red-50/30 rounded p-2 h-10 resize-none focus:h-24 transition-all">Falta de personal por enfermedad.</textarea>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center justify-center px-3 py-1 rounded-full text-[11px] font-bold bg-red-100 text-red-600 border border-red-200 uppercase">
+                                        Faltante
+                                    </span>
+</td>
+</tr>
+<!-- Row 3: Águila 16 -->
+<tr class="hover:bg-[#f1f4f1]/30 transition-colors">
+<td class="px-4 py-4">
+<select class="w-full text-sm border-none focus:ring-0 bg-transparent font-medium text-[#121712]">
+<option>Village</option>
+<option>Zona 6</option>
+<option selected="">Águila 16</option>
+<option>Industrial</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5">
+<option>Marcos Díaz</option>
+<option>Juan Pérez</option>
+<option>Ana Gómez</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<select class="w-full text-sm border border-[#dde4dd] rounded px-2 py-1.5">
+<option>Elena Sans</option>
+<option>Carlos Ruiz</option>
+<option>Luis Torres</option>
+</select>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="7"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="1"/>
+</td>
+<td class="px-4 py-4">
+<input class="w-16 mx-auto block text-center text-sm border border-[#dde4dd] rounded py-1.5" type="number" value="1"/>
+</td>
+<td class="px-4 py-4">
+<textarea class="w-full text-sm border border-[#dde4dd] rounded p-2 h-10 resize-none focus:h-24 transition-all" placeholder="Agregar justificación...">Puesto 3 vacío temporalmente.</textarea>
+</td>
+<td class="px-4 py-4 text-center">
+<span class="inline-flex items-center justify-center px-3 py-1 rounded-full text-[11px] font-bold bg-blue-100 text-blue-600 border border-blue-200 uppercase">
+                                        Pendiente
+                                    </span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-[#f8faf8] border-t border-[#dde4dd] flex items-center justify-between">
+<button class="flex items-center gap-2 text-sm font-bold text-primary hover:text-primary/80 transition-colors">
+<span class="material-symbols-outlined">add_circle</span>
+                        Añadir Zona
+                    </button>
+<!-- Legend -->
+<div class="flex items-center gap-6">
+<span class="text-[10px] font-bold text-[#678368] uppercase tracking-widest">Leyenda:</span>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+<span class="text-xs font-medium text-[#121712]">Completo</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+<span class="text-xs font-medium text-[#121712]">Pendiente</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+<span class="text-xs font-medium text-[#121712]">Faltante</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Summary / Extra Notes -->
+<div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="bg-white p-6 rounded-xl border border-[#dde4dd] shadow-sm">
+<h3 class="text-sm font-bold text-[#121712] mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">description</span>
+                        Observaciones Generales del Turno
+                    </h3>
+<textarea class="w-full h-32 text-sm border border-[#dde4dd] rounded-lg p-3 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all resize-none" placeholder="Escriba cualquier novedad relevante que afecte a todas las zonas..."></textarea>
+</div>
+<div class="bg-primary/5 p-6 rounded-xl border border-primary/20 flex flex-col justify-center items-center text-center">
+<div class="bg-white p-3 rounded-full mb-3 shadow-sm text-primary">
+<span class="material-symbols-outlined text-3xl">info</span>
+</div>
+<h3 class="text-sm font-bold text-[#121712]">Recordatorio de Seguridad</h3>
+<p class="text-xs text-[#678368] mt-2 max-w-xs">
+                        Asegúrese de que todos los supervisores hayan validado sus horas de entrada antes de finalizar el registro del turno.
+                    </p>
+</div>
+</div>
+</main>
+<!-- Footer Actions (Sticky on Mobile) -->
+<footer class="md:hidden sticky bottom-0 bg-white border-t border-[#dde4dd] p-4 flex gap-3">
+<button class="flex-1 bg-[#f1f4f1] text-[#121712] py-3 rounded-lg font-bold text-sm">Cancelar</button>
+<button class="flex-1 bg-primary text-white py-3 rounded-lg font-bold text-sm">Guardar</button>
+</footer>
+</div>
+</body></html>

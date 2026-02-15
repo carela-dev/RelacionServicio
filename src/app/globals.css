@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* 
+  Ensuring Tailwind 4 scans the entire src directory. 
+  The path is relative to the CSS file location (src/app/globals.css)
+*/
+@source "..";
+@source "../components";
+
+:root {
+  --foreground-rgb: 18, 23, 18;
+  --background-start-rgb: 246, 248, 246;
+  --background-end-rgb: 246, 248, 246;
+  --primary: #33c738;
+}
+
+@theme {
+  --color-primary: #33c738;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 19, 31, 19;
+    --background-end-rgb: 19, 31, 19;
+  }
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-start-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  75% {
+    transform: translateX(5px);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+}
+
+.animate-shake {
+  animation: shake 0.5s cubic-bezier(.36, .07, .19, .97) both;
+}
+
+.glass-morphism {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
