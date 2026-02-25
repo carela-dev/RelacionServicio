@@ -1,30 +1,60 @@
-import { createClient } from '@supabase/supabase-js'
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
+import { NextResponse, type NextRequest } from 'next/server'
 
 export async function middleware(request: NextRequest) {
-    const response = NextResponse.next()
+    let response = NextResponse.next({
+        request: {
+            headers: request.headers,
+        },
+    })
 
-    // Get cookies from request
-    const accessToken = request.cookies.get('sb-access-token')?.value
-    const refreshToken = request.cookies.get('sb-refresh-token')?.value
-
-    const supabase = createClient(
+    const supabase = createServerClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+        {
+            cookies: {
+                get(name: string) {
+                    return request.cookies.get(name)?.value
+                },
+                set(name: string, value: string, options: CookieOptions) {
+                    request.cookies.set({
+                        name,
+                        value,
+                        ...options,
+                    })
+                    response = NextResponse.next({
+                        request: {
+                            headers: request.headers,
+                        },
+                    })
+                    response.cookies.set({
+                        name,
+                        value,
+                        ...options,
+                    })
+                },
+                remove(name: string, options: CookieOptions) {
+                    request.cookies.set({
+                        name,
+                        value: '',
+                        ...options,
+                    })
+                    response = NextResponse.next({
+                        request: {
+                            headers: request.headers,
+                        },
+                    })
+                    response.cookies.set({
+                        name,
+                        value: '',
+                        ...options,
+                    })
+                },
+            },
+        }
     )
 
-    // If we have tokens, set the session
-    if (accessToken && refreshToken) {
-        await supabase.auth.setSession({
-            access_token: accessToken,
-            refresh_token: refreshToken,
-        })
-    }
-
-    const {
-        data: { user },
-    } = await supabase.auth.getUser()
+    const { data: { user } } = await supabase.auth.getUser()
 
     // Protect all routes except login and root
     if (!user && !request.nextUrl.pathname.startsWith('/login') && request.nextUrl.pathname !== '/') {
@@ -33,6 +63,7 @@ export async function middleware(request: NextRequest) {
         return NextResponse.redirect(redirectUrl)
     }
 
+    // Redirect logged in users away from login page
     if (user && request.nextUrl.pathname.startsWith('/login')) {
         const redirectUrl = request.nextUrl.clone()
         redirectUrl.pathname = '/PanelDeControlDeSupervision'
@@ -45,3 +76,4 @@ export async function middleware(request: NextRequest) {
 export const config = {
     matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 }
+

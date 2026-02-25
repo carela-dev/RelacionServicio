@@ -24,7 +24,7 @@ export default function LoginPage() {
         setError(null)
 
         try {
-            const { error: authError } = await supabase.auth.signInWithPassword({
+            const { error: authError, data } = await supabase.auth.signInWithPassword({
                 email,
                 password,
             })
@@ -34,7 +34,9 @@ export default function LoginPage() {
                     ? 'Credenciales incorrectas. Por favor, verifica tu correo y contraseña.'
                     : authError.message)
                 setLoading(false)
-            } else {
+            } else if (data.session) {
+                // Force a router refresh to sync cookies
+                router.refresh()
                 router.push('/PanelDeControlDeSupervision')
             }
         } catch (err) {
@@ -42,6 +44,7 @@ export default function LoginPage() {
             setLoading(false)
         }
     }
+
 
     if (!mounted) return null
 
